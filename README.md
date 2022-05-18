@@ -12,25 +12,26 @@
 | birthday           | date   | null: false                |
 
 ### Association
-- belongs_to :purchase
+- has_many   :purchase
 - has_many   :items
 
 ## itemsテーブル
 
-| Column             | Type      | Options     |
-| ------------------ | --------- | ----------- |
-| name               | string    | null: false |
-| description        | string    | null: false |
-| category_id        | integer   | null: false |
-| item_status_id     | integer   | null: false |
-| cost_id            | integer   | null: false |
-| prefecture_id      | integer   | null: false |
-| send_days_id       | integer   | null: false |
-| price              | integer   | null: false |
+| Column             | Type      | Options                         |
+| ------------------ | --------- | --------------------------------|
+| name               | string    | null: false                     |
+| description        | text      | null: false                     |
+| category_id        | integer   | null: false                     |
+| item_status_id     | integer   | null: false                     |
+| cost_id            | integer   | null: false                     |
+| prefecture_id      | integer   | null: false                     |
+| send_days_id       | integer   | null: false                     |
+| price              | integer   | null: false                     |
+| user               | reference | null: false , foreign_key: true |
 
 ### Association
 - belongs_to :user
-- belongs_to :purchase
+- has_one    :purchase
 
 ## purchasesテーブル
 
@@ -40,9 +41,9 @@
 | item                | reference | null: false , foreign_key: true |
 
 ### Association
-- belongs_to :users
-- belongs_to :items
-- belongs_to :shipping_addresses
+- belongs_to :user
+- belongs_to :item
+- belongs_to :shipping_address
 
 ## shipping_addressesテーブル
 
