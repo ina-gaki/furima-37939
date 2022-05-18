@@ -1,24 +1,61 @@
-# README
+## usersテーブル
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+| Column             | Type   | Options                    |
+| ------------------ | ------ | -------------------------- |
+| nickname           | string | null: false                |
+| email              | string | null: false , unique: true |
+| password           | string | null: false                |
+| first_name         | string | null: false                |
+| family_name        | string | null: false                |
+| first_name_kana    | string | null: false                |
+| family_name_kana   | string | null: false                |
+| birthday           | string | null: false                |
 
-Things you may want to cover:
+### Association
+- belongs_to :purchase_informaitons
+- has_many   :item_informationｓ
 
-* Ruby version
+## item_informationｓテーブル
 
-* System dependencies
+| Column             | Type      | Options     |
+| ------------------ | --------- | ----------- |
+| image              | reference | null: false |
+| name               | string    | null: false |
+| description        | string    | null: false |
+| category           | string    | null: false |
+| item_status        | string    | null: false |
+| cost               | string    | null: false |
+| prefecture         | string    | null: false |
+| send_days          | string    | null: false |
+| price              | string    | null: false |
 
-* Configuration
+### Association
+- belongs_to :users
+- belongs_to :purchase_informaitons
 
-* Database creation
+## purchase_informaitonsテーブル
 
-* Database initialization
+| Column              | Type      | Options                         |
+| --------------------| --------- | ------------------------------- |
+| user_id             | reference | null: false , foreign_key: true |
+| item_id             | reference | null: false , foreign_key: true |
+| shipping_address_id | reference | null: false , foreign_key: true |
 
-* How to run the test suite
+### Association
+- belongs_to :users
+- belongs_to :item_informations
+- belongs_to :shipping_addresses
 
-* Services (job queues, cache servers, search engines, etc.)
+## shipping_addressesテーブル
 
-* Deployment instructions
+| Column              | Type      | Options     |
+| ------------------- | --------- | ----------- |
+| postal_code         | string    | null: false |
+| shipping_prefecture | string    | null: false |
+| city                | string    | null: false |
+| shipping_address    | string    | null: false |
+| building            | string    | null: false |
+| phone_number        | string    | null: false |
 
-* ...
+### Association
+- belongs_to :purchase_informaitons
