@@ -20,8 +20,9 @@ RSpec.describe User, type: :model do
     it 'passwordが空では登録できない' do
       user = FactoryBot.build(:user)
       user.password = '' 
+      user.password_confirmation = ''
       user.valid?
-      expect(user.errors.full_messages).to include("Password can't be blank", "Password can't be blank", "Password is invalid", "Password confirmation doesn't match Password")
+      expect(user.errors.full_messages).to include("Password can't be blank")
     end
     it 'family_nameが空では登録できない' do
       user = FactoryBot.build(:user)
@@ -100,8 +101,9 @@ RSpec.describe User, type: :model do
     it 'passwordは6文字以上でないと登録できない' do
       user = FactoryBot.build(:user)
       user.password = '12345'
+      user.password_confirmation = '12345'
       user.valid?
-      expect(user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is too short (minimum is 6 characters)")
+      expect(user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
     end
     it 'passwordは半角英語のみでは登録できない' do
       user = FactoryBot.build(:user)
