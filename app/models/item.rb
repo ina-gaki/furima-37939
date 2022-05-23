@@ -16,6 +16,6 @@ class Item < ApplicationRecord
   validates :cost_id,        presence: true , numericality: { other_than: 1 , message: "can't be blank"} 
   validates :prefecture_id,  presence: true , numericality: { other_than: 1 , message: "can't be blank"} 
   validates :send_days_id,   presence: true , numericality: { other_than: 1 , message: "can't be blank"} 
-  validates :price,          presence: true , length: { maximum: 9999999 , minimum: 300 }
+  validates :price,          presence: true , inclusion:  { in: 300..9999999 }
   validates :user,           presence: true
 end
