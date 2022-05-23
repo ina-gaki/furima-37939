@@ -9,13 +9,13 @@ class Item < ApplicationRecord
   belongs_to :user
 
   validates :image,          presence: true
-  validates :name,           presence: true
-  validates :description,    presence: true
+  validates :name,           presence: true , length: { maximum: 40 }
+  validates :description,    presence: true , length: { maximum: 1000 }
   validates :category_id,    presence: true , numericality: { other_than: 1 , message: "can't be blank"} 
   validates :item_status_id, presence: true , numericality: { other_than: 1 , message: "can't be blank"} 
   validates :cost_id,        presence: true , numericality: { other_than: 1 , message: "can't be blank"} 
   validates :prefecture_id,  presence: true , numericality: { other_than: 1 , message: "can't be blank"} 
   validates :send_days_id,   presence: true , numericality: { other_than: 1 , message: "can't be blank"} 
-  validates :price,          presence: true
+  validates :price,          presence: true , length: { maximum: 9999999 , minimum: 300 }
   validates :user,           presence: true
 end
