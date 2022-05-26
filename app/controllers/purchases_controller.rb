@@ -1,20 +1,19 @@
 class PurchasesController < ApplicationController
-  before_action :authenticate_user!, except: [:index ,:new ,:create]
+  before_action :authenticate_user!, except: [:index ,:create]
 
   def index
-  end
-
-  def new
     @total_purchase = TotalPurchase.new
+    @item = Item.find(params[:item_id])
   end
 
   def create
+    binding.pry
     @total_purchase = TotalPurchase.new(purchase_params)
     if @total_purchase.valid?
       @total_purchase.save
       redirect_to root_path
     else
-      render :new
+      render :index
     end
   end
 
