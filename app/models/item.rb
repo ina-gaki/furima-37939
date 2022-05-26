@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   belongs_to :send_days
   has_one_attached :image
   belongs_to :user
-  belongs_to :purchase
+  had_one    :purchase
 
   validates :image,          presence: true
   validates :name,           presence: true , length: { maximum: 40 }
