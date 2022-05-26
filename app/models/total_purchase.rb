@@ -9,10 +9,9 @@ class TotalPurchase
   validates :city,                    presence: true 
   validates :shipping_address,        presence: true 
   validates :phone_number,            presence: true 
-  validates :purchase,                presence: true 
 
   def save
-    totalpurshase = TotalPurchase.create(item_id: item.id ,user_id: current_user.id)
-    ShippingAddress.create(postal_code: postal_code, prefecture: prefecture, city: city, shipping_address: shipping_address, building: building , phone_number: phone_number, purchase_id: purchase.id)
+    purchase = Purchase.create(item_id: item_id ,user_id: user_id)
+    ShippingAddress.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, shipping_address: shipping_address, building: building , phone_number: phone_number, purchase_id: purchase.id)
   end
 end
