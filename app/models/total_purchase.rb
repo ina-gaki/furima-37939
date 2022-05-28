@@ -9,6 +9,7 @@ class TotalPurchase
   validates :city,                    presence: true 
   validates :shipping_address,        presence: true 
   validates :phone_number,            presence: true , format: {with: /\A\d{10}$|^\d{11}\z/ }
+  validates :token, presence: true
 
   def save
     purchase = Purchase.create(item_id: item_id ,user_id: user_id)
