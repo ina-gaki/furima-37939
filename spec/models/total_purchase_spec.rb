@@ -6,7 +6,6 @@ RSpec.describe TotalPurchase, type: :model do
     user = FactoryBot.create(:user)
     item = FactoryBot.create(:item)
     @purchase = FactoryBot.build(:total_purchase, user_id: user.id , item_id: item.id)
-
   end
 
     describe '購入情報' do
@@ -82,5 +81,15 @@ RSpec.describe TotalPurchase, type: :model do
         end
       end
     end
+    describe 'クレジットカード' do
+      context 'クレジットカード情報を送信できない場合' do
+        it "tokenが空では登録できないこと" do
+          @purchase.token = nil
+          @purchase.valid?
+          expect(@purchase.errors.full_messages).to include("Token can't be blank")
+        end
+      end
+    end
+
   end
 end
