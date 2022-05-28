@@ -1,5 +1,6 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_item
   before_action :move_to_index, only: :index
 
 
@@ -8,7 +9,6 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @total_purchase = TotalPurchase.new(purchase_params)
     if @total_purchase.valid?
       pay_item
@@ -22,11 +22,11 @@ class PurchasesController < ApplicationController
   private
 
   def purchase_params
-    params.require(:total_purchase).permit(:postal_code, :prefecture_id, :city, :shipping_address, :building, :phone_number, :purchase_id)
+    params.require(:total_purchase).permit(:postal_code, :prefecture_id, :city, :shipping_address, :building, :phone_number)
     .merge(item_id: @item.id ,user_id: current_user.id ,token: params[:token])
   end
 
-  def  pay_item
+  def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"] 
       Payjp::Charge.create(
         amount: @item.price,
@@ -36,12 +36,14 @@ class PurchasesController < ApplicationController
   end
 
   def move_to_index
-    @items = Item.all.order("created_at DESC")
     @total_purchase = TotalPurchase.new
-    @item = Item.find(params[:item_id])
     if @item.purchase.present? || current_user.id == @item.user_id
-      render "items/index"
+      redirect_to root_path
     end
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
 end
