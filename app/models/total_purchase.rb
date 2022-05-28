@@ -1,6 +1,6 @@
 class TotalPurchase
   include ActiveModel::Model
-  attr_accessor :postal_code, :prefecture_id, :city, :shipping_address, :building, :phone_number, :purchase, :item_id, :user_id
+  attr_accessor :postal_code, :prefecture_id, :city, :shipping_address, :building, :phone_number, :purchase, :item_id, :user_id, :token
 
   validates :item_id,                 presence: true 
   validates :user_id,                 presence: true 
