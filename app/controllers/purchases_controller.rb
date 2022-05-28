@@ -1,9 +1,10 @@
 class PurchasesController < ApplicationController
-  before_action :authenticate_user!, except: [:index ,:create]
+  before_action :authenticate_user!
+  before_action :move_to_index, only: :index
+
 
   def index
-    @total_purchase = TotalPurchase.new
-    @item = Item.find(params[:item_id])
+
   end
 
   def create
@@ -26,12 +27,21 @@ class PurchasesController < ApplicationController
   end
 
   def  pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"] 
       Payjp::Charge.create(
         amount: @item.price,
         card: purchase_params[:token],
         currency: 'jpy'               
       )
+  end
+
+  def move_to_index
+    @items = Item.all.order("created_at DESC")
+    @total_purchase = TotalPurchase.new
+    @item = Item.find(params[:item_id])
+    if @item.purchase.present? || current_user.id == @item.user_id
+      render "items/index"
+    end
   end
 
 end
