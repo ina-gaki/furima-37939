@@ -49,8 +49,8 @@ RSpec.describe TotalPurchase, type: :model do
           @purchase.valid?
           expect(@purchase.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
         end
-        it 'prefecture_idが空では登録できない' do
-          @purchase.prefecture_id = ''
+        it '発送元の地域に「---」が選択されている場合は出品できない' do
+          @purchase.prefecture_id = '1'
           @purchase.valid?
           expect(@purchase.errors.full_messages).to include("Prefecture can't be blank")
         end
@@ -69,8 +69,13 @@ RSpec.describe TotalPurchase, type: :model do
           @purchase.valid?
           expect(@purchase.errors.full_messages).to include("Phone number can't be blank")
         end
-        it 'phone_numberは10桁以上11桁以内でしか登録できない' do
-          @purchase.phone_number = '0123456789123'
+        it 'phone_numberが12桁以上では登録できない' do
+          @purchase.phone_number = '012345678912'
+          @purchase.valid?
+          expect(@purchase.errors.full_messages).to include("Phone number is invalid")
+        end
+        it 'phone_numberが9桁以下では登録できない' do
+          @purchase.phone_number = '012345678'
           @purchase.valid?
           expect(@purchase.errors.full_messages).to include("Phone number is invalid")
         end
